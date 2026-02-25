@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الصفحة غير موجودة - دار الماهر</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .error-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 100px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .error-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('../assets/images/patterns/islamic-pattern.svg');
+            background-size: 200px 200px;
+            opacity: 0.1;
+            animation: float 20s linear infinite;
+        }
+
+        .error-content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 40px;
+            padding: 4rem;
+            max-width: 600px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--gold);
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+        }
+
+        .error-code {
+            font-size: 8rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-shadow: 5px 5px 0 var(--gold);
+            line-height: 1;
+            margin-bottom: 1rem;
+            animation: glitch 3s infinite;
+        }
+
+        .error-title {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .error-message {
+            color: var(--dark);
+            opacity: 0.7;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .quran-verse {
+            background: var(--primary-light);
+            padding: 1.5rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            border-right: 4px solid var(--gold);
+            text-align: center;
+        }
+
+        .quran-verse p {
+            font-size: 1.3rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            font-family: 'Amiri', serif;
+        }
+
+        .quran-verse small {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-home {
+            background: var(--gold);
+            color: var(--dark);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-contact {
+            background: transparent;
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid var(--white);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-contact:hover {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        .search-box {
+            margin-top: 2rem;
+        }
+
+        .search-box form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--gray-dark);
+            border-radius: 50px;
+            font-size: 1rem;
+        }
+
+        .search-box button {
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-box button:hover {
+            background: var(--primary-dark);
+        }
+
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 6rem;
+            }
+            
+            .error-content {
+                padding: 2rem;
+            }
+            
+            .error-actions {
+                flex-direction: column;
+            }
+            
+            .btn-home, .btn-contact {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (مبسط) -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="assets/images/logo.png" alt="دار الماهر" class="logo-img" onerror="this.src='https://via.placeholder.com/50x50/00bcd4/d4af37?text=DM'">
+                <span>دار الماهر</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="index.html#about">من نحن</a></li>
+                <li><a href="pages/programs.html">البرامج</a></li>
+                <li><a href="pages/register.html">التسجيل</a></li>
+                <li><a href="pages/login.html">تسجيل الدخول</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 404 Content -->
+    <section class="error-page">
+        <div class="error-content">
+            <div class="error-code">404</div>
+            <h1 class="error-title">الصفحة غير موجودة</h1>
+            <p class="error-message">عذراً، الصفحة التي تبحث عنها ربما تكون قد انتقلت أو تم حذفها</p>
+            
+            <div class="quran-verse">
+                <p>"وَمَا أُوتِيتُم مِّنَ الْعِلْمِ إِلَّا قَلِيلًا"</p>
+                <small>سورة الإسراء - الآية 85</small>
+            </div>
+            
+            <div class="error-actions">
+                <a href="index.html" class="btn-home">
+                    <i class="fas fa-home"></i>
+                    العودة للرئيسية
+                </a>
+                <a href="index.html#contact" class="btn-contact">
+                    <i class="fas fa-envelope"></i>
+                    تواصل معنا
+                </a>
+            </div>
+            
+            <div class="search-box">
+                <form action="pages/programs.html" method="get">
+                    <input type="text" placeholder="ابحث في الموقع..." name="q">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer مبسط -->
+    <footer style="margin-top: 0;">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>جميع الحقوق محفوظة &copy; 2025 دار الماهر لتحفيظ القرآن</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/utils.js"></script>
+    <script>
+        // تفعيل القائمة المتنقلة
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

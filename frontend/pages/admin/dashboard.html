@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة المشرف - دار الماهر</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* إضافات لوحة المشرف */
+        .admin-dashboard {
+            background: linear-gradient(135deg, #1a2a3a 0%, #2a3a4a 100%);
+            min-height: 100vh;
+            padding: 100px 20px 50px;
+        }
+
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .admin-header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .admin-title h1 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .admin-title p {
+            color: var(--gold);
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .stat-card .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .stat-label {
+            color: white;
+            opacity: 0.9;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tab-btn:hover,
+        .tab-btn.active {
+            background: var(--gold);
+            color: var(--dark);
+        }
+
+        .tab-content {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 2rem;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--gray-dark);
+            border-radius: 50px;
+            font-size: 1rem;
+        }
+
+        .search-bar select {
+            padding: 1rem 2rem;
+            border: 2px solid var(--gray-dark);
+            border-radius: 50px;
+            background: white;
+        }
+
+        .students-table {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .students-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .students-table th {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .students-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-dark);
+            text-align: center;
+        }
+
+        .students-table tr:hover {
+            background: var(--primary-light);
+        }
+
+        .status-badge {
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-pending {
+            background: #ffc107;
+            color: var(--dark);
+        }
+
+        .status-inactive {
+            background: #dc3545;
+            color: white;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 3px;
+        }
+
+        .btn-view {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-edit {
+            background: var(--gold);
+            color: var(--dark);
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        .student-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 30px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            color: var(--primary-dark);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        .student-detail-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--gray);
+            border-radius: 10px;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .add-note-form {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--primary-light);
+            border-radius: 10px;
+        }
+
+        .add-note-form textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--gray-dark);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            resize: vertical;
+        }
+
+        @media (max-width: 768px) {
+            .admin-tabs {
+                flex-direction: column;
+            }
+            
+            .tab-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="../../assets/images/logo.png" alt="دار الماهر">
+                <span>دار الماهر</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../../index.html">الرئيسية</a></li>
+                <li><a href="../programs.html">البرامج</a></li>
+                <li><a href="dashboard.html" class="active">لوحة المشرف</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <section class="admin-dashboard">
+        <div class="admin-container">
+            <!-- Admin Header -->
+            <div class="admin-header">
+                <div class="admin-title">
+                    <h1>مرحباً، المشرف</h1>
+                    <p>لوحة التحكم والإشراف على الطلاب</p>
+                </div>
+                <button class="btn btn-primary" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل خروج
+                </button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalStudents">0</div>
+                    <div class="stat-label">إجمالي الطلاب</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="pendingStudents">0</div>
+                    <div class="stat-label">بانتظار الموافقة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="activeStudents">0</div>
+                    <div class="stat-label">طلاب نشطون</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="teachersCount">0</div>
+                    <div class="stat-label">المعلمون</div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="admin-tabs">
+                <button class="tab-btn active" onclick="switchTab('students')">
+                    <i class="fas fa-users"></i> الطلاب
+                </button>
+                <button class="tab-btn" onclick="switchTab('pending')">
+                    <i class="fas fa-clock"></i> طلبات التسجيل
+                </button>
+                <button class="tab-btn" onclick="switchTab('teachers')">
+                    <i class="fas fa-chalkboard-teacher"></i> المعلمون
+                </button>
+                <button class="tab-btn" onclick="switchTab('reports')">
+                    <i class="fas fa-chart-bar"></i> التقارير
+                </button>
+            </div>
+
+            <!-- Students Tab -->
+            <div id="studentsTab" class="tab-content active">
+                <div class="search-bar">
+                    <input type="text" id="searchStudents" placeholder="بحث عن طالب..." onkeyup="searchStudents()">
+                    <select id="filterProgram" onchange="filterStudents()">
+                        <option value="">كل البرامج</option>
+                        <option value="children">برنامج الأطفال</option>
+                        <option value="adults">برنامج الكبار</option>
+                        <option value="ijazah">الإجازة بالسند</option>
+                        <option value="tajweed">دورات التجويد</option>
+                    </select>
+                </div>
+
+                <div class="students-table">
+                    <table id="studentsTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>الاسم</th>
+                                <th>البريد</th>
+                                <th>الجوال</th>
+                                <th>البرنامج</th>
+                                <th>المستوى</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsTableBody">
+                            <!-- ستتم تعبئتها ديناميكياً -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pending Requests Tab -->
+            <div id="pendingTab" class="tab-content">
+                <div class="students-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>الاسم</th>
+                                <th>البريد</th>
+                                <th>الجوال</th>
+                                <th>البرنامج</th>
+                                <th>تاريخ التسجيل</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pendingTableBody">
+                            <!-- ستتم تعبئتها ديناميكياً -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Teachers Tab -->
+            <div id="teachersTab" class="tab-content">
+                <button class="btn btn-primary" onclick="showAddTeacherModal()" style="margin-bottom: 1rem;">
+                    <i class="fas fa-plus"></i> إضافة معلم جديد
+                </button>
+                
+                <div class="students-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>الاسم</th>
+                                <th>البريد</th>
+                                <th>التخصص</th>
+                                <th>عدد الطلاب</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teachersTableBody">
+                            <!-- ستتم تعبئتها ديناميكياً -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div id="reportsTab" class="tab-content">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                    <div class="stat-card" style="background: white;">
+                        <h3 style="color: var(--primary); margin-bottom: 1rem;">تقرير التقدم</h3>
+                        <canvas id="progressChart"></canvas>
+                    </div>
+                    <div class="stat-card" style="background: white;">
+                        <h3 style="color: var(--primary); margin-bottom: 1rem;">توزيع البرامج</h3>
+                        <canvas id="programsChart"></canvas>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem;">
+                    <button class="btn btn-primary" onclick="exportReport()">
+                        <i class="fas fa-download"></i> تصدير تقرير كامل
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Details Modal -->
+    <div id="studentModal" class="student-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>بيانات الطالب</h2>
+                <button class="close-btn" onclick="closeStudentModal()">&times;</button>
+            </div>
+            <div id="studentDetails"></div>
+            
+            <div class="add-note-form">
+                <h3 style="margin-bottom: 1rem;">إضافة ملاحظة</h3>
+                <textarea id="teacherNote" placeholder="اكتب ملاحظة للطالب..."></textarea>
+                <button class="btn btn-primary" onclick="addNote()">إضافة الملاحظة</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script>
+        // التحقق من صلاحية المشرف
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!auth.isAuthenticated() || !auth.hasRole('admin')) {
+                window.location.href = '../login.html';
+                return;
+            }
+            
+            loadAdminData();
+            initCharts();
+        });
+
+        // تبديل التبويبات
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tab + 'Tab').classList.add('active');
+            
+            if (tab === 'students') loadStudents();
+            else if (tab === 'pending') loadPendingRequests();
+            else if (tab === 'teachers') loadTeachers();
+        }
+
+        // تحميل بيانات المشرف
+        async function loadAdminData() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/admin/stats`, {
+                    headers: {
+                        'Authorization': `Bearer ${auth.getToken()}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                document.getElementById('totalStudents').textContent = data.totalStudents || 0;
+                document.getElementById('pendingStudents').textContent = data.pendingStudents || 0;
+                document.getElementById('activeStudents').textContent = data.activeStudents || 0;
+                document.getElementById('teachersCount').textContent = data.teachersCount || 0;
+                
+                loadStudents();
+                loadPendingRequests();
+                loadTeachers();
+                
+            } catch (error) {
+                console.error('Error loading admin data:', error);
+            }
+        }
+
+        // تحميل قائمة الطلاب
+        async function loadStudents() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/admin/students`, {
+                    headers: {
+                        'Authorization': `Bearer ${auth.getToken()}`
+                    }
+                });
+                
+                const students = await response.json();
+                displayStudents(students);
+                
+            } catch (error) {
+                console.error('Error loading students:', error);
+            }
+        }
+
+        // عرض الطلاب في الجدول
+        function displayStudents(students) {
+            const tbody = document.getElementById('studentsTableBody');
+            tbody.innerHTML = '';
+            
+            students.forEach((student, index) => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${student.fullName}</td>
+                    <td>${student.email}</td>
+                    <td>${student.phone}</td>
+                    <td>${getProgramName(student.program)}</td>
+                    <td>${student.level || 'مبتدئ'}</td>
+                    <td><span class="status-badge status-${student.status}">${getStatusText(student.status)}</span></td>
+                    <td>
+                        <button class="action-btn btn-view" onclick="viewStudent('${student.email}')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="action-btn btn-edit" onclick="editStudent('${student.email}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn btn-delete" onclick="deleteStudent('${student.email}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+            });
+        }
+
+        // عرض طالب معين
+        async function viewStudent(email) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/admin/student/${email}`, {
+                    headers: {
+                        'Authorization': `Bearer ${auth.getToken()}`
+                    }
+                });
+                
+                const student = await response.json();
+                
+                const details = document.getElementById('studentDetails');
+                details.innerHTML = `
+                    <div class="student-detail-item">
+                        <div class="detail-label">الاسم الكامل</div>
+                        <div>${student.fullName}</div>
+                    </div>
+                    <div class="student-detail-item">
+                        <div class="detail-label">البريد الإلكتروني</div>
+                        <div>${student.email}</div>
+                    </div>
+                    <div class="student-detail-item">
+                        <div class="detail-label">رقم الجوال</div>
+                        <div>${student.phone}</div>
+                    </div>
+                    <div class="student-detail-item">
+                        <div class="detail-label">العمر</div>
+                        <div>${student.age}</div>
+                    </div>
+                    <div class="student-detail-item">
+                        <div class="detail-label">البرنامج</div>
+                        <div>${getProgramName(student.program)}</div>
+                    </div>
+                    <div class="student-detail-item">
+                        <div class="detail-label">المستوى</div>
+                        <div>${student.level}</div>
+                    </div>
+                    <div class="student-detail-item">
+                        <div class="detail-label">الأجزاء المحفوظة</div>
+                        <div>${student.memorizedParts}/30</div>
+                    </div>
+                    <div class="student-detail-item">
+                        <div class="detail-label">تاريخ التسجيل</div>
+                        <div>${new Date(student.createdAt).toLocaleDateString('ar-EG')}</div>
+                    </div>
+                    <div class="student-detail-item">
+                        <div class="detail-label">الحالة</div>
+                        <div><span class="status-badge status-${student.status}">${getStatusText(student.status)}</span></div>
+                    </div>
+                `;
+                
+                document.getElementById('studentModal').style.display = 'flex';
+                
+            } catch (error) {
+                console.error('Error viewing student:', error);
+            }
+        }
+
+        // الموافقة على طالب
+        async function approveStudent(email) {
+            if (!confirm('هل أنت متأكد من الموافقة على هذا الطالب؟')) return;
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/admin/student/${email}/approve`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${auth.getToken()}`
+                    }
+                });
+                
+                if (response.ok) {
+                    utils.showNotification('تمت الموافقة على الطالب', 'success');
+                    loadPendingRequests();
+                    loadAdminData();
+                }
+            } catch (error) {
+                console.error('Error approving student:', error);
+            }
+        }
+
+        // رفض طالب
+        async function rejectStudent(email) {
+            if (!confirm('هل أنت متأكد من رفض هذا الطالب؟')) return;
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/admin/student/${email}/reject`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${auth.getToken()}`
+                    }
+                });
+                
+                if (response.ok) {
+                    utils.showNotification('تم رفض الطالب', 'success');
+                    loadPendingRequests();
+                    loadAdminData();
+                }
+            } catch (error) {
+                console.error('Error rejecting student:', error);
+            }
+        }
+
+        // إضافة ملاحظة
+        async function addNote() {
+            const note = document.getElementById('teacherNote').value;
+            if (!note) return;
+            
+            // هنا يتم إرسال الملاحظة للباك اند
+            utils.showNotification('تم إضافة الملاحظة', 'success');
+            document.getElementById('teacherNote').value = '';
+        }
+
+        // تهيئة الرسوم البيانية
+        function initCharts() {
+            // Progress Chart
+            const progressCtx = document.getElementById('progressChart')?.getContext('2d');
+            if (progressCtx) {
+                new Chart(progressCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['الأسبوع 1', 'الأسبوع 2', 'الأسبوع 3', 'الأسبوع 4'],
+                        datasets: [{
+                            label: 'متوسط التقدم',
+                            data: [12, 19, 15, 22],
+                            borderColor: '#d4af37',
+                            backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                            tension: 0.4
+                        }]
+                    }
+                });
+            }
+            
+            // Programs Chart
+            const programsCtx = document.getElementById('programsChart')?.getContext('2d');
+            if (programsCtx) {
+                new Chart(programsCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['الأطفال', 'الكبار', 'الإجازة', 'التجويد'],
+                        datasets: [{
+                            data: [45, 30, 15, 10],
+                            backgroundColor: ['#00bcd4', '#d4af37', '#28a745', '#dc3545']
+                        }]
+                    }
+                });
+            }
+        }
+
+        // دوال مساعدة
+        function getProgramName(program) {
+            const programs = {
+                'children': 'برنامج الأطفال',
+                'adults': 'برنامج الكبار',
+                'ijazah': 'الإجازة بالسند',
+                'tajweed': 'دورات التجويد'
+            };
+            return programs[program] || program;
+        }
+
+        function getStatusText(status) {
+            const statuses = {
+                'active': 'نشط',
+                'pending': 'قيد الانتظار',
+                'inactive': 'غير نشط'
+            };
+            return statuses[status] || status;
+        }
+
+        function closeStudentModal() {
+            document.getElementById('studentModal').style.display = 'none';
+        }
+
+        function logout() {
+            auth.logout();
+        }
+    </script>
+</body>
+</html>
