@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التسجيل - دار الماهر</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* إضافات مخصصة لصفحة التسجيل */
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 50px;
+            background: linear-gradient(135deg, rgba(0, 188, 212, 0.9) 0%, rgba(0, 151, 167, 0.95) 100%);
+        }
+
+        .auth-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--gold);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-header img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+
+        .auth-header h2 {
+            color: var(--primary-dark);
+            font-size: 2rem;
+        }
+
+        .auth-header p {
+            color: var(--dark);
+            opacity: 0.7;
+        }
+
+        .auth-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .auth-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .auth-form input,
+        .auth-form select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--gray-dark);
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .auth-form input:focus,
+        .auth-form select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+
+        .auth-form .btn {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .auth-footer a:hover {
+            color: var(--gold);
+        }
+
+        .terms {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+
+        .terms input[type="checkbox"] {
+            width: auto;
+            margin-left: 10px;
+        }
+
+        .terms label {
+            margin: 0;
+            font-weight: normal;
+        }
+
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="../assets/images/logo.png" alt="دار الماهر" class="logo-img" onerror="this.src='https://via.placeholder.com/50x50/00bcd4/d4af37?text=DM'">
+                <span>دار الماهر</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html">الرئيسية</a></li>
+                <li><a href="../index.html#about">من نحن</a></li>
+                <li><a href="programs.html">البرامج</a></li>
+                <li><a href="register.html" class="active">التسجيل</a></li>
+                <li><a href="login.html">تسجيل الدخول</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <section class="auth-page">
+        <div class="auth-card">
+            <div class="auth-header">
+                <img src="../assets/images/logo.png" alt="دار الماهر" onerror="this.src='https://via.placeholder.com/80x80/00bcd4/d4af37?text=DM'">
+                <h2>تسجيل جديد</h2>
+                <p>انضم إلى دار الماهر لتحفيظ القرآن</p>
+            </div>
+
+            <form class="auth-form" id="registerForm">
+                <div class="form-group">
+                    <label for="fullName">الاسم الكامل</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="أدخل اسمك الثلاثي" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني</label>
+                    <input type="email" id="email" name="email" placeholder="example@domain.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">رقم الجوال</label>
+                    <input type="tel" id="phone" name="phone" placeholder="05xxxxxxxx" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">العمر</label>
+                    <input type="number" id="age" name="age" min="5" max="80" placeholder="سنوات" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="program">البرنامج المراد الالتحاق به</label>
+                    <select id="program" name="program" required>
+                        <option value="">اختر البرنامج</option>
+                        <option value="children">برنامج الأطفال (5-12 سنة)</option>
+                        <option value="adults">برنامج الكبار</option>
+                        <option value="ijazah">الإجازة بالسند</option>
+                        <option value="tajweed">دورات التجويد</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <input type="password" id="password" name="password" placeholder="أدخل كلمة مرور قوية" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">تأكيد كلمة المرور</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="أعد إدخال كلمة المرور" required>
+                </div>
+
+                <div class="terms">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">أوافق على <a href="#" target="_blank">الشروط والأحكام</a></label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">تسجيل <i class="fas fa-user-plus"></i></button>
+            </form>
+
+            <div class="auth-footer">
+                <p>لديك حساب بالفعل؟ <a href="login.html">تسجيل دخول</a></p>
+            </div>
+        </div>
+    </section>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // تهيئة القائمة المتنقلة
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+            }
+
+            // معالجة نموذج التسجيل
+            const registerForm = document.getElementById('registerForm');
+            if (registerForm) {
+                registerForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    // التحقق من تطابق كلمات المرور
+                    const password = document.getElementById('password').value;
+                    const confirmPassword = document.getElementById('confirmPassword').value;
+                    
+                    if (password !== confirmPassword) {
+                        utils.showNotification('كلمات المرور غير متطابقة', 'error');
+                        return;
+                    }
+                    
+                    // التحقق من صحة رقم الجوال
+                    const phone = document.getElementById('phone').value;
+                    if (!utils.isValidSaudiPhone(phone)) {
+                        utils.showNotification('رقم الجوال غير صحيح', 'error');
+                        return;
+                    }
+                    
+                    const userData = {
+                        fullName: document.getElementById('fullName').value,
+                        email: document.getElementById('email').value,
+                        phone: phone,
+                        age: document.getElementById('age').value,
+                        program: document.getElementById('program').value,
+                        password: password
+                    };
+                    
+                    const result = await api.registerUser(userData);
+                    if (result.success) {
+                        registerForm.reset();
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 2000);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
